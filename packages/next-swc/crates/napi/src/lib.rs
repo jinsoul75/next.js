@@ -60,6 +60,7 @@ pub mod turbopack;
 #[cfg(not(target_arch = "wasm32"))]
 pub mod turbotrace;
 pub mod util;
+pub mod css;
 
 // Declare build-time information variables generated in build.rs
 shadow_rs::shadow!(build);

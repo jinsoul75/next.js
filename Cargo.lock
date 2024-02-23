@@ -40,9 +40,9 @@ dependencies = [
 
 [[package]]
 name = "ahash"
-version = "0.8.6"
+version = "0.8.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "91429305e9f0a25f6205c5b8e0d2db09e0708a7a6df0f42212bb56c32c8ac97a"
+checksum = "d713b3834d76b85304d4d525563c1276e2e30dc97cc67bfb4585a4a29fc2c89f"
 dependencies = [
  "cfg-if 1.0.0",
  "getrandom",
@@ -570,7 +570,7 @@ dependencies = [
  "funty",
  "radium",
  "tap",
- "wyz",
+ "wyz 0.5.1",
 ]
 
 [[package]]
@@ -612,7 +612,7 @@ version = "0.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "405bbd46590a441abe5db3e5c8af005aa42e640803fecb51912703e93e4ce8d3"
 dependencies = [
- "ahash 0.8.6",
+ "ahash 0.8.9",
  "anyhow",
  "chrono",
  "either",
@@ -1325,9 +1325,9 @@ dependencies = [
 
 [[package]]
 name = "ctor"
-version = "0.2.0"
+version = "0.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dd4056f63fce3b82d852c3da92b08ea59959890813a7f4ce9c0ff85b10cf301b"
+checksum = "30d2b3721e861707777e3195b0158f950ae6dc4a27e4d02ff9f67e3eb3de199e"
 dependencies = [
  "quote",
  "syn 2.0.32",
@@ -2132,7 +2132,7 @@ version = "0.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "43a3c133739dddd0d2990f9a4bdf8eb4b21ef50e4851ca85ab661199821d510e"
 dependencies = [
- "ahash 0.8.6",
+ "ahash 0.8.9",
 ]
 
 [[package]]
@@ -2857,15 +2857,41 @@ dependencies = [
  "data-encoding",
  "itertools 0.10.5",
  "lazy_static",
- "lightningcss-derive",
- "parcel_selectors",
+ "lightningcss-derive 1.0.0-alpha.42 (registry+https://github.com/rust-lang/crates.io-index)",
+ "parcel_selectors 0.26.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "parcel_sourcemap",
  "paste",
  "pathdiff",
  "rayon",
  "serde",
  "smallvec",
- "static-self",
+ "static-self 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "lightningcss"
+version = "1.0.0-alpha.54"
+source = "git+https://github.com/parcel-bundler/lightningcss?rev=2f6b8d26424bed1fc5d55a9bdf55e83f7f54c182#2f6b8d26424bed1fc5d55a9bdf55e83f7f54c182"
+dependencies = [
+ "ahash 0.8.9",
+ "bitflags 2.4.0",
+ "const-str",
+ "cssparser",
+ "cssparser-color",
+ "dashmap",
+ "data-encoding",
+ "getrandom",
+ "itertools 0.10.5",
+ "lazy_static",
+ "lightningcss-derive 1.0.0-alpha.42 (git+https://github.com/parcel-bundler/lightningcss?rev=2f6b8d26424bed1fc5d55a9bdf55e83f7f54c182)",
+ "parcel_selectors 0.26.4 (git+https://github.com/parcel-bundler/lightningcss?rev=2f6b8d26424bed1fc5d55a9bdf55e83f7f54c182)",
+ "parcel_sourcemap",
+ "paste",
+ "pathdiff",
+ "rayon",
+ "serde",
+ "smallvec",
+ "static-self 0.1.1 (git+https://github.com/parcel-bundler/lightningcss?rev=2f6b8d26424bed1fc5d55a9bdf55e83f7f54c182)",
 ]
 
 [[package]]
@@ -2877,6 +2903,33 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 1.0.109",
+]
+
+[[package]]
+name = "lightningcss-derive"
+version = "1.0.0-alpha.42"
+source = "git+https://github.com/parcel-bundler/lightningcss?rev=2f6b8d26424bed1fc5d55a9bdf55e83f7f54c182#2f6b8d26424bed1fc5d55a9bdf55e83f7f54c182"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 1.0.109",
+]
+
+[[package]]
+name = "lightningcss-napi"
+version = "0.1.0"
+source = "git+https://github.com/parcel-bundler/lightningcss?rev=2f6b8d26424bed1fc5d55a9bdf55e83f7f54c182#2f6b8d26424bed1fc5d55a9bdf55e83f7f54c182"
+dependencies = [
+ "crossbeam-channel",
+ "cssparser",
+ "lightningcss 1.0.0-alpha.54",
+ "napi",
+ "parcel_sourcemap",
+ "rayon",
+ "serde",
+ "serde-detach",
+ "serde_bytes",
+ "smallvec",
 ]
 
 [[package]]
@@ -3191,9 +3244,9 @@ dependencies = [
 
 [[package]]
 name = "napi"
-version = "2.15.0"
+version = "2.15.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "efbf98e1bcb85cc441bbf7cdfb11070d2537a100e2697d75397b2584c32492d1"
+checksum = "72e0dc78e0524286630914db66e31bad70160e379705a9ce92e0161ce2389d89"
 dependencies = [
  "anyhow",
  "bitflags 2.4.0",
@@ -3214,9 +3267,9 @@ checksum = "d4b4532cf86bfef556348ac65e561e3123879f0e7566cca6d43a6ff5326f13df"
 
 [[package]]
 name = "napi-derive"
-version = "2.15.0"
+version = "2.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7622f0dbe0968af2dacdd64870eee6dee94f93c989c841f1ad8f300cf1abd514"
+checksum = "e56bd9f0bd84c1f138c5cb22bbf394f75d796b24dad689599ca94cf94e61cc21"
 dependencies = [
  "cfg-if 1.0.0",
  "convert_case 0.6.0",
@@ -3228,9 +3281,9 @@ dependencies = [
 
 [[package]]
 name = "napi-derive-backend"
-version = "1.0.59"
+version = "1.0.61"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8ec514d65fce18a959be55e7f683ac89c6cb850fb59b09e25ab777fd5a4a8d9e"
+checksum = "d03b8f403a37007cad225039fc0323b961bb40d697eea744140920ebb689ff1d"
 dependencies = [
  "convert_case 0.6.0",
  "once_cell",
@@ -3369,7 +3422,7 @@ dependencies = [
  "fxhash",
  "hex",
  "lazy_static",
- "lightningcss",
+ "lightningcss 1.0.0-alpha.51",
  "once_cell",
  "pathdiff",
  "preset_env_base",
@@ -3396,6 +3449,7 @@ dependencies = [
  "fxhash",
  "getrandom",
  "iana-time-zone",
+ "lightningcss-napi",
  "napi",
  "napi-build",
  "napi-derive",
@@ -3732,7 +3786,24 @@ dependencies = [
  "precomputed-hash",
  "serde",
  "smallvec",
- "static-self",
+ "static-self 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "parcel_selectors"
+version = "0.26.4"
+source = "git+https://github.com/parcel-bundler/lightningcss?rev=2f6b8d26424bed1fc5d55a9bdf55e83f7f54c182#2f6b8d26424bed1fc5d55a9bdf55e83f7f54c182"
+dependencies = [
+ "bitflags 2.4.0",
+ "cssparser",
+ "fxhash",
+ "log",
+ "phf 0.10.1",
+ "phf_codegen",
+ "precomputed-hash",
+ "serde",
+ "smallvec",
+ "static-self 0.1.1 (git+https://github.com/parcel-bundler/lightningcss?rev=2f6b8d26424bed1fc5d55a9bdf55e83f7f54c182)",
 ]
 
 [[package]]
@@ -4083,7 +4154,7 @@ version = "0.4.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1d99dc6ba4753f07bfbc4dbf3137618d31af2611fcaced7237647075ca687eaa"
 dependencies = [
- "ahash 0.8.6",
+ "ahash 0.8.9",
  "anyhow",
  "browserslist-rs",
  "dashmap",
@@ -4883,6 +4954,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "serde-detach"
+version = "0.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c621150da442b6a854bb63c431347bcd4de19219a3e1f06fd744208ded057288"
+dependencies = [
+ "serde",
+ "wyz 0.2.0",
+]
+
+[[package]]
 name = "serde-wasm-bindgen"
 version = "0.4.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5315,7 +5396,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "253e76c8c993a7b1b201b0539228b334582153cd4364292822d2c30776d469c7"
 dependencies = [
  "smallvec",
- "static-self-derive",
+ "static-self-derive 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "static-self"
+version = "0.1.1"
+source = "git+https://github.com/parcel-bundler/lightningcss?rev=2f6b8d26424bed1fc5d55a9bdf55e83f7f54c182#2f6b8d26424bed1fc5d55a9bdf55e83f7f54c182"
+dependencies = [
+ "smallvec",
+ "static-self-derive 0.1.1 (git+https://github.com/parcel-bundler/lightningcss?rev=2f6b8d26424bed1fc5d55a9bdf55e83f7f54c182)",
 ]
 
 [[package]]
@@ -5323,6 +5413,16 @@ name = "static-self-derive"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5268c96d4b907c558a9a52d8492522d6c7b559651a5e1d8f2d551e461b9425d5"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 1.0.109",
+]
+
+[[package]]
+name = "static-self-derive"
+version = "0.1.1"
+source = "git+https://github.com/parcel-bundler/lightningcss?rev=2f6b8d26424bed1fc5d55a9bdf55e83f7f54c182#2f6b8d26424bed1fc5d55a9bdf55e83f7f54c182"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -5410,8 +5510,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9215277feaeb625e11469ca0e94f9f76b66c2b99b12fb3314b49f84403aa93f2"
 dependencies = [
  "anyhow",
- "lightningcss",
- "parcel_selectors",
+ "lightningcss 1.0.0-alpha.51",
+ "parcel_selectors 0.26.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "preset_env_base",
  "serde",
  "swc_common",
@@ -5568,7 +5668,7 @@ version = "0.3.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "630c761c74ac8021490b78578cc2223aa4a568241e26505c27bf0e4fd4ad8ec2"
 dependencies = [
- "ahash 0.8.6",
+ "ahash 0.8.9",
  "anyhow",
  "dashmap",
  "once_cell",
@@ -5582,7 +5682,7 @@ version = "0.33.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "095c158fe55b36faeebb4274692643a6d7cdc5b7902e1d5968ddbe52b7de1d1c"
 dependencies = [
- "ahash 0.8.6",
+ "ahash 0.8.9",
  "anyhow",
  "ast_node",
  "atty",
@@ -7751,9 +7851,9 @@ dependencies = [
  "async-trait",
  "indexmap 1.9.3",
  "indoc",
- "lightningcss",
+ "lightningcss 1.0.0-alpha.51",
  "once_cell",
- "parcel_selectors",
+ "parcel_selectors 0.26.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "parcel_sourcemap",
  "regex",
  "serde",
@@ -7887,9 +7987,9 @@ dependencies = [
  "anyhow",
  "async-trait",
  "indexmap 1.9.3",
- "lightningcss",
+ "lightningcss 1.0.0-alpha.51",
  "modularize_imports",
- "parcel_selectors",
+ "parcel_selectors 0.26.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde",
  "serde_json",
  "styled_components",
@@ -8090,7 +8190,7 @@ version = "1.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "97fee6b57c6a41524a810daee9286c02d7752c4253064d0b05472833a438f675"
 dependencies = [
- "cfg-if 0.1.10",
+ "cfg-if 1.0.0",
  "rand",
  "static_assertions",
 ]
@@ -9327,6 +9427,12 @@ dependencies = [
 
 [[package]]
 name = "wyz"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "85e60b0d1b5f99db2556934e21937020776a5d31520bf169e851ac44e6420214"
+
+[[package]]
+name = "wyz"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "05f360fc0b24296329c78fda852a1e9ae82de9cf7b27dae4b7f62f118f77b9ed"
@@ -9374,18 +9480,18 @@ checksum = "09041cd90cf85f7f8b2df60c646f853b7f535ce68f85244eb6731cf89fa498ec"
 
 [[package]]
 name = "zerocopy"
-version = "0.7.21"
+version = "0.7.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "686b7e407015242119c33dab17b8f61ba6843534de936d94368856528eae4dcc"
+checksum = "74d4d3961e53fa4c9a25a8637fc2bfaf2595b3d3ae34875568a5cf64787716be"
 dependencies = [
  "zerocopy-derive",
 ]
 
 [[package]]
 name = "zerocopy-derive"
-version = "0.7.21"
+version = "0.7.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "020f3dfe25dfc38dfea49ce62d5d45ecdd7f0d8a724fa63eb36b6eba4ec76806"
+checksum = "9ce1b18ccd8e73a9321186f97e46f9f04b778851177567b1975109d26a08d2a6"
 dependencies = [
  "proc-macro2",
  "quote",

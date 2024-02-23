@@ -172,7 +172,12 @@ export interface Binding {
   initCustomTraceSubscriber?: any
   teardownTraceSubscriber?: any
   initHeapProfiler?: any
-  teardownHeapProfiler?: any
+  teardownHeapProfiler?: any,
+  css: {
+    lightning: {
+
+    }
+  }
 }
 
 export async function loadBindings(
@@ -1444,6 +1449,14 @@ function loadNative(importPath?: string) {
         compileSync: (src: string, options: any) =>
           bindings.mdxCompileSync(src, toBuffer(getMdxOptions(options))),
       },
+      css: {
+        lightning: {
+          transform: () => {},
+          transformStyleAttr: () => {},
+          bundle: () => {},
+          bundleSync: () => {}
+        }
+      }
     }
     return nativeBindings
   }
