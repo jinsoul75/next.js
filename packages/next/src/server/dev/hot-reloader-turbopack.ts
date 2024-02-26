@@ -58,6 +58,7 @@ import {
   type StartBuilding,
   processTopLevelIssues,
   type TopLevelIssuesMap,
+  type IssuesMap,
 } from './turbopack-utils'
 import {
   propagateServerField,
@@ -799,32 +800,34 @@ export async function createHotReloaderTurbopack(
           sendEnqueuedMessages()
 
           const errors = new Map<string, CompilationError>()
+
           const addErrors = (
             errorsMap: Map<string, CompilationError>,
-            issues: EntryIssuesMap
+            issueMap: IssuesMap
           ) => {
-            for (const issueMap of issues.values()) {
-              for (const [key, issue] of issueMap) {
-                if (errorsMap.has(key)) continue
+            for (const [key, issue] of issueMap) {
+              if (errorsMap.has(key)) continue
 
-                const message = formatIssue(issue)
+              const message = formatIssue(issue)
 
-                errorsMap.set(key, {
-                  message,
-                  details: issue.detail
-                    ? renderStyledStringToErrorAnsi(issue.detail)
-                    : undefined,
-                })
-              }
+              errorsMap.set(key, {
+                message,
+                details: issue.detail
+                  ? renderStyledStringToErrorAnsi(issue.detail)
+                  : undefined,
+              })
             }
           }
-          addErrors(errors, currentEntryIssues)
+          addErrors(errors, currentTopLevelIssues)
+          currentEntryIssues.forEach((issueMap) => addErrors(errors, issueMap))
 
           for (const client of clients) {
             const state = clientStates.get(client)
             if (!state) continue
             const clientErrors = new Map(errors)
-            addErrors(clientErrors, state.clientIssues)
+            state.clientIssues.forEach((issueMap) =>
+              addErrors(clientErrors, issueMap)
+            )
 
             client.send(
               JSON.stringify({
