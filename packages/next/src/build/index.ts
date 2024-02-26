@@ -662,6 +662,8 @@ async function getBuildId(
     .traceAsyncFn(() => generateBuildId(config.generateBuildId, nanoid))
 }
 
+const IS_TURBOPACK_BUILD = process.env.TURBOPACK && process.env.TURBOPACK_BUILD
+
 export default async function build(
   dir: string,
   reactProductionProfiling = false,
@@ -1327,7 +1329,7 @@ export default async function build(
         duration: number
         buildTraceContext: undefined
       }> {
-        if (!(process.env.TURBOPACK && process.env.TURBOPACK_BUILD)) {
+        if (!IS_TURBOPACK_BUILD) {
           throw new Error("next build doesn't support turbopack yet")
         }
 
@@ -1408,6 +1410,23 @@ export default async function build(
         entrypointsSubscription.return?.().catch(() => {})
 
         const entrypoints = entrypointsResult.value
+
+        const topLevelErrors: {
+          message: string
+        }[] = []
+        for (const issue of entrypoints.issues) {
+          topLevelErrors.push({
+            message: formatIssue(issue),
+          })
+        }
+
+        if (topLevelErrors.length > 0) {
+          throw new Error(
+            `Turbopack build failed with ${
+              topLevelErrors.length
+            } issues:\n${topLevelErrors.map((e) => e.message).join('\n')}`
+          )
+        }
 
         await handleEntrypoints({
           entrypoints,
