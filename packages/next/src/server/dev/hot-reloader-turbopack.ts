@@ -270,10 +270,6 @@ export async function createHotReloaderTurbopack(
     for (const client of clients) {
       const state = clientStates.get(client)
       if (!state) continue
-      if (currentTopLevelIssues.size > 0) {
-        // During compilation errors we want to delay the HMR events until errors are fixed
-        return
-      }
       for (const [, issueMap] of state.clientIssues) {
         if (issueMap.size > 0) {
           // During compilation errors we want to delay the HMR events until errors are fixed
