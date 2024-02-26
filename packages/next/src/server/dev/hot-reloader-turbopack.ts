@@ -56,6 +56,8 @@ import {
   renderStyledStringToErrorAnsi,
   type SendHmr,
   type StartBuilding,
+  processTopLevelIssues,
+  type TopLevelIssuesMap,
 } from './turbopack-utils'
 import {
   propagateServerField,
@@ -151,6 +153,7 @@ export async function createHotReloaderTurbopack(
     app: new Map(),
   }
 
+  const currentTopLevelIssues: TopLevelIssuesMap = new Map()
   const currentEntryIssues: EntryIssuesMap = new Map()
 
   const manifestLoader = new TurbopackManifestLoader({ buildId, distDir })
@@ -253,6 +256,10 @@ export async function createHotReloaderTurbopack(
   let hmrEventHappened = false
   let hmrHash = 0
   const sendEnqueuedMessages = () => {
+    if (currentTopLevelIssues.size > 0) {
+      // During compilation errors we want to delay the HMR events until errors are fixed
+      return
+    }
     for (const [, issueMap] of currentEntryIssues) {
       if (issueMap.size > 0) {
         // During compilation errors we want to delay the HMR events until errors are fixed
@@ -262,6 +269,10 @@ export async function createHotReloaderTurbopack(
     for (const client of clients) {
       const state = clientStates.get(client)
       if (!state) continue
+      if (currentTopLevelIssues.size > 0) {
+        // During compilation errors we want to delay the HMR events until errors are fixed
+        return
+      }
       for (const [, issueMap] of state.clientIssues) {
         if (issueMap.size > 0) {
           // During compilation errors we want to delay the HMR events until errors are fixed
@@ -403,13 +414,15 @@ export async function createHotReloaderTurbopack(
         )
       }
 
+      processTopLevelIssues(currentTopLevelIssues, entrypoints)
+
       await handleEntrypoints({
         entrypoints,
 
         currentEntrypoints,
 
         changeSubscriptions,
-        currentEntryIssues: currentEntryIssues,
+        currentEntryIssues,
         manifestLoader,
         nextConfig: opts.nextConfig,
         rewrites: opts.fsChecker.rewrites,
@@ -589,6 +602,7 @@ export async function createHotReloaderTurbopack(
             })
           }
         }
+        addIssues(currentTopLevelIssues)
         clientIssues.forEach(addIssues)
         currentEntryIssues.forEach(addIssues)
 
@@ -625,18 +639,23 @@ export async function createHotReloaderTurbopack(
       const appEntryKey = getEntryKey('app', 'server', page)
       const pagesEntryKey = getEntryKey('pages', 'server', page)
 
+      const topLevelIssues = currentTopLevelIssues.values()
+
       const thisEntryIssues =
         currentEntryIssues.get(appEntryKey) ??
         currentEntryIssues.get(pagesEntryKey)
       if (thisEntryIssues !== undefined && thisEntryIssues.size > 0) {
         // If there is an error related to the requesting page we display it instead of the first error
-        return [...thisEntryIssues.values()].map(
+        return [...topLevelIssues, ...thisEntryIssues.values()].map(
           (issue) => new Error(formatIssue(issue))
         )
       }
 
       // Otherwise, return all errors across pages
       const errors = []
+      for (const issue of topLevelIssues) {
+        errors.push(new Error(formatIssue(issue)))
+      }
       for (const entryIssues of currentEntryIssues.values()) {
         for (const issue of entryIssues.values()) {
           errors.push(new Error(formatIssue(issue)))
@@ -738,7 +757,7 @@ export async function createHotReloaderTurbopack(
           page,
           pathname,
           route,
-          currentEntryIssues: currentEntryIssues,
+          currentEntryIssues,
           entrypoints: currentEntrypoints,
           manifestLoader,
           readyIds,
