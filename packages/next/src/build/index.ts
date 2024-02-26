@@ -1352,7 +1352,6 @@ export default async function build(
             allowedRevalidateHeaderKeys: undefined,
             clientRouterFilters: undefined,
             config,
-            // When passing `false` you get `react.jsxDEV is not a function`
             dev,
             distDir,
             fetchCacheKeyPrefix: undefined,
